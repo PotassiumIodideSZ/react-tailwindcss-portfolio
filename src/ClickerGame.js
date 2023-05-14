@@ -68,8 +68,15 @@ const ClickerGame = () => {
     const isFightStartRef = useRef(isFightStart);
 
     let mHealthPerc = 0
-
-
+    const picture = [gamebgImg2, monster2]
+    
+    function componentDidMount() {
+        picture.forEach((picture) => {
+            const img = new Image();
+            img.src = picture.fileName;
+        });
+    }
+    componentDidMount();
     
     function getDamageUpgradePrice() {
         return Math.floor(basePrice * Math.pow(priceMultiplier, damage));
