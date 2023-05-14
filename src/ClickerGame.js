@@ -68,15 +68,13 @@ const ClickerGame = () => {
     const isFightStartRef = useRef(isFightStart);
 
     let mHealthPerc = 0
-    const picture = [gamebgImg2, monster2]
-    
-    function componentDidMount() {
-        picture.forEach((picture) => {
-            const img = new Image();
-            img.src = picture.fileName;
+    useEffect(() => {
+        const pictures = [monsterImg, gameframeImg, gamebgImg1, gamebgImg2, ability1Btn, ability2Btn, ability1BtnShadow, ability2BtnShadow, abilityLockBtn, healthBar, timerBar, fightBtn, Armor, Damage, Skills, shieldBtn, swordBtn, magicBtn, monster1, monster2, upgradeButton, coinsIcon, crystalsIcon, healthBarBack, AbilityLockTime];
+        pictures.forEach((picture) => {
+          const img = new Image();
+          img.src = picture;
         });
-    }
-    componentDidMount();
+      }, []);
     
     function getDamageUpgradePrice() {
         return Math.floor(basePrice * Math.pow(priceMultiplier, damage));
