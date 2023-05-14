@@ -5,6 +5,9 @@ import MobileImage1 from '../images/mobile-project-1.jpg';
 import MobileImage2 from '../images/mobile-project-2.jpg';
 import UIImage1 from '../images/ui-project-1.jpg';
 import UIImage2 from '../images/ui-project-2.jpg';
+import React from 'react';
+
+
 
 export const projectsData = [
 	{

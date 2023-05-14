@@ -1,10 +1,13 @@
+
+import React from 'react';
+
 export const aboutMeData = [
 	{
 		id: 1,
-		bio: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil vel illum asperiores dignissimos cumque quibusdam et fugiat voluptatem nobis suscipit explicabo, eaque consequatur nesciunt, fugit eligendi corporis laudantium adipisci soluta? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt totam dolorum, ducimus obcaecati, voluptas facilis molestias nobis ut quam natus similique inventore excepturi optio ipsa deleniti fugit illo. Unde, amet! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum illo necessitatibus perspiciatis! Aperiam perferendis labore temporibus, eos culpa corporis recusandae quas, fuga voluptatibus nesciunt odit libero tenetur neque consequatur ea.',
+		bio: 'Привет! Меня зовут Захар Скобелкин и я фуллстак разработчик и веб-дизайнер из Челябинска. За эти годы я приобрел множество знаний и навыков, которые позволяют мне создавать высококачественные продукты. Имею опыт работы в качестве фрилансера, занимался разработкой сайтов с использованием React для фронтенда и Django для бэкенда. Имел некоторый опыт работы с базами данных MySQL и MongoDB, но использование Django позволило мне сосредоточиться на других аспектах разработки. Также работал над интеграцией API и созданием пользовательских интерфейсов, имею опыт работы с вебсокетами.',
 	},
 	{
 		id: 2,
-		bio: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil vel illum asperiores dignissimos cumque quibusdam et fugiat voluptatem nobis suscipit explicabo, eaque consequatur nesciunt, fugit eligendi corporis laudantium adipisci soluta?',
+		bio: 'В последнее время я заинтересовался геймдевом и начал изучать эту область с большим увлечением. Поэтому теперь список моих интересов расширился и теперь включают в себя разработку игр.Я часто использую нейросети в своей работе, чтобы создавать уникальные и инновационные решения. Например, весь арт в моей игре был создан с помощью midjourney и stable diffusion. Это позволило мне в краткие сроки создать уникальный визуальный стиль для игры. Я люблю экспериментировать и использовать новые технологии, чтобы улучшать свою работу и достигать лучших результатов.',
 	},
 ];

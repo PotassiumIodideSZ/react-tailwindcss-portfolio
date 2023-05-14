@@ -1,4 +1,5 @@
 import { useState, createContext } from 'react';
+import React from 'react';
 import { singleProjectData as singleProjectDataJson } from '../data/singleProjectData';
 
 const SingleProjectContext = createContext();

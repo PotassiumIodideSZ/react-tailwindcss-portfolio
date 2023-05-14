@@ -5,6 +5,8 @@ import ProjectRelatedProjects from '../components/projects/ProjectRelatedProject
 import { SingleProjectProvider } from '../context/SingleProjectContext';
 import { motion } from 'framer-motion';
 
+import React from 'react';
+
 const ProjectSingle = () => {
 	return (
 		<motion.div

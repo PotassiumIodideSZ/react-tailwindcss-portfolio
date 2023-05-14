@@ -4,7 +4,6 @@
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
 */
-
 *,
 ::before,
 ::after {
@@ -609,6 +608,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-40 {
   width: 10rem;
 }
+.w-48 {
+  width: 12rem;
+}
+.w-56 {
+  width: 14rem;
+}
 .w-5 {
   width: 1.25rem;
 }
@@ -981,6 +986,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:bg-indigo-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(79 70 229 / var(--tw-bg-opacity));
+}
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(5, 150, 105, var(--tw-bg-opacity));
 }
 .hover\:bg-ternary-dark:hover {
   --tw-bg-opacity: 1;
@@ -1477,4 +1491,124 @@ Ensure the default browser behavior of the `hidden` attribute.
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Almendra:ital@0;1&display=swap');
+
+@keyframes clock-appear {
+  0% {
+    clip-path: polygon( 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 20%,50% 20%,50% 20%,50% 20%,50% 20%,50% 20%,50% 20%,50% 20%);
+  }
+  16% {
+    clip-path: polygon( 50% 0%,  100% 30%, 100% 30%, 100% 30%, 100% 30%, 100% 30%, 100% 30%, 100% 30%, 80% 30%, 80% 30%, 80% 30%, 80% 30%, 80% 30%, 80% 30%, 80% 30%, 50% 20%);
+  }
+  33% {
+    clip-path: polygon( 50% 0%,  100% 30%, 100% 85%, 100% 85%, 100% 85%, 100% 85%, 100% 85%, 100% 85%, 80% 66%, 80% 66%, 80% 66%, 80% 66%, 80% 66%, 80% 66%, 80% 30%, 50% 20%);
+  }
+  50% {
+    clip-path: polygon( 50% 0%,  100% 30%, 100% 85%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 80%, 50% 80%, 50% 80%, 50% 80%, 50% 80%, 80% 66%, 80% 30%, 50% 20%);
+  }
+  66% {
+    clip-path: polygon( 50% 0%,  100% 30%, 100% 85%, 50% 100%, 0% 85%, 0% 85%, 0% 85%, 0% 85%, 20% 60%, 20% 60%, 20% 60%, 20% 60%, 50% 80%, 80% 66%, 80% 30%, 50% 20%);
+  }
+  83% {
+    clip-path: polygon( 50% 0%,  100% 30%, 100% 85%, 50% 100%, 0% 85%, 0% 33%, 0% 33%, 0% 33%, 20% 33%, 20% 33%, 20% 33%, 20% 60%, 50% 80%, 80% 66%, 80% 30%, 50% 20%);
+  }
+  100% {
+    clip-path: polygon( 50% 0%,  100% 30%, 100% 85%, 50% 100%, 0% 85%, 0% 33%, 50% 0%, 50% 0%, 50% 20%, 50% 20%, 20% 33%, 20% 60%, 50% 80%, 80% 66%, 80% 30%, 50% 20%);
+  }
+}
+
+
+.clock-appearing {
+    visibility: visible;
+    animation: clock-appear linear;
+}
+
+.clock-appearing2 {
+  clip-path: polygon( 50% 0%,50% 50%, 50% 0%, 50% 0%);
+}
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pressed {
+  transform: scale(0.97);
+  box-shadow: none;
+  filter: brightness(90%);
+}
+
+.mainContainer{
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+.hitten {
+  transform: scale(0.97);
+  filter: brightness(90%);
+  -webkit-filter: saturate(2) hue-rotate(340deg);
+  filter: saturate(2) hue-rotate(340deg);
+}
+
+
+.abilityPressed {
+  box-shadow: none;
+  filter: brightness(85%);
+  transform: scale(0.98);
+  padding-top: 4px;
+}
+@media (min-width: 1200px){
+  .mainMainContainer {
+      max-width: 1200px;
+      margin-left: auto;
+      box-sizing: border-box;
+      margin-right: auto;
+      display: block;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
 }

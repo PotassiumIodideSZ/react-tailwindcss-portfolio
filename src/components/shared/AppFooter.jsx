@@ -1,3 +1,5 @@
+
+import React from 'react';
 import {
 	FiGithub,
 	FiTwitter,
@@ -11,27 +13,27 @@ const socialLinks = [
 	{
 		id: 1,
 		icon: <FiGlobe />,
-		url: 'https://www.stoman.me/',
+		url: '/',
 	},
 	{
 		id: 2,
 		icon: <FiGithub />,
-		url: 'https://github.com/realstoman',
+		url: 'https://github.com',
 	},
 	{
 		id: 3,
 		icon: <FiTwitter />,
-		url: 'https://twitter.com/realstoman',
+		url: 'https://twitter.com',
 	},
 	{
 		id: 4,
 		icon: <FiLinkedin />,
-		url: 'https://www.linkedin.com/in/realstoman',
+		url: 'https://www.linkedin.com',
 	},
 	{
 		id: 5,
 		icon: <FiYoutube />,
-		url: 'https://www.youtube.com/c/realstoman',
+		url: 'https://www.youtube.com',
 	},
 ];
 
@@ -42,7 +44,7 @@ const AppFooter = () => {
 				{/* Footer social links */}
 				<div className="font-general-regular flex flex-col justify-center items-center mb-12 sm:mb-28">
 					<p className="text-3xl sm:text-4xl text-primary-dark dark:text-primary-light mb-5">
-						Follow me
+						Тут могли быть мои соцсети, но их нет(
 					</p>
 					<ul className="flex gap-4 sm:gap-8">
 						{socialLinks.map((link) => (

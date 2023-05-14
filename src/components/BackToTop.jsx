@@ -1,4 +1,7 @@
 import { useEffect } from 'react';
+import React from 'react';
+
+
 
 const BackToTop = () => {
 	const userScrollPosition = 0;

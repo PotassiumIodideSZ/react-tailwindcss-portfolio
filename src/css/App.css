@@ -2,9 +2,9 @@
  * React & TailwindCSS Portfolio Main CSS File
  * Powered by: @realstoman
 */
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,200;1,200&display=swap');
 body {
-	font-family: 'GeneralSans-Variable';
+	font-family: 'Roboto Mono', monospace;
 }
 
 /* Fonts */
@@ -19,7 +19,7 @@ body {
 }
 
 .font-general-variable {
-	font-family: 'GeneralSans-Variable';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -33,7 +33,7 @@ body {
 }
 
 .font-general-variable-italic {
-	font-family: 'GeneralSans-VariableItalic';
+	font-family: 'Roboto Mono';
 }
 
 @font-face {
@@ -47,7 +47,7 @@ body {
 }
 
 .font-general-extralight {
-	font-family: 'GeneralSans-Extralight';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -61,7 +61,7 @@ body {
 }
 
 .font-general-extralight-italic {
-	font-family: 'GeneralSans-ExtralightItalic';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -75,7 +75,7 @@ body {
 }
 
 .font-general-light {
-	font-family: 'GeneralSans-Light';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -89,7 +89,7 @@ body {
 }
 
 .font-general-light-italic {
-	font-family: 'GeneralSans-LightItalic';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -103,7 +103,7 @@ body {
 }
 
 .font-general-regular {
-	font-family: 'GeneralSans-Regular';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -117,7 +117,7 @@ body {
 }
 
 .font-general-italic {
-	font-family: 'GeneralSans-Italic';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -131,7 +131,7 @@ body {
 }
 
 .font-general-medium {
-	font-family: 'GeneralSans-Medium';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -145,7 +145,7 @@ body {
 }
 
 .font-general-medium-italic {
-	font-family: 'GeneralSans-MediumItalic';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -159,7 +159,7 @@ body {
 }
 
 .font-general-semibold {
-	font-family: 'GeneralSans-Semibold';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -173,7 +173,7 @@ body {
 }
 
 .font-general-semibold-italic {
-	font-family: 'GeneralSans-SemiboldItalic';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -187,7 +187,7 @@ body {
 }
 
 .font-general-bold {
-	font-family: 'GeneralSans-Bold';
+	font-family: 'Roboto Mono', monospace;
 }
 
 @font-face {
@@ -201,7 +201,7 @@ body {
 }
 
 .font-general-bold-italic {
-	font-family: 'GeneralSans-BoldItalic';
+	font-family: 'Roboto Mono', monospace;
 }
 
 /* Scroll to top style */
@@ -217,7 +217,7 @@ body {
 	cursor: pointer;
 	animation: fadeIn 0.3s;
 	transition: opacity 0.4s;
-	opacity: 0.9;
+	opacity: 0.5;
 }
 
 .scrollToTop:hover {
