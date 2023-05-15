@@ -13,7 +13,7 @@ const LoadingScreen = () => {
             </div>
             <div style={{padding: 39, position:'absolute', width:'100%', height:'100%',zIndex: 4,marginTop: 25}}>
                 <div className="loadindScreenHolder" style={{position:'relative'}}>
-                    <ul>
+                    <ul className='loaderUl'>
                         <li></li>
                         <li></li>
                         <li></li>
