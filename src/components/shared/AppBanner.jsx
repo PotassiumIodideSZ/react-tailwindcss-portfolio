@@ -38,7 +38,7 @@ const AppBanner = () => {
 					}}
 					className="font-general-medium mt-4 text-lg md:text-xl lg:text-2xl xl:text-2xl text-center sm:text-left leading-normal text-gray-500 dark:text-gray-200"
 				>
-					Фулл-стек разработчик и веб-дизайнер с широким спектром навыков и опытом в создании современных и инновационных веб-проектов.
+					Фулл-стек разработчик с широким спектром навыков и опытом в создании современных и инновационных веб-проектов.
 				</motion.p>
 				
 				
