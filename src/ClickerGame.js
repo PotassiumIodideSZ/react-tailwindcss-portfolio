@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, pro } from 'react';
+import LoadingScreen from './LoadingScreen.js';
+
+
 import monsterImg from './assets/monster.png';
 import gameframeImg from './assets/frameRdy.png';
 import gamebgImg1 from './assets/game_bg.png';
@@ -57,6 +60,7 @@ const ClickerGame = () => {
     const [kills, setKills] = useState(0);
     const [gamebgImg, setgamebgImg] = useState(gamebgImgList[0]);
     const [monster, setmonster] = useState(monsterList[0]);
+    const [load, setLoad] = useState(0);
 
     const baseDuration = 1; // base duration in milliseconds
     const armorFactor = 0.1; // additional duration per armor point in milliseconds
@@ -69,12 +73,34 @@ const ClickerGame = () => {
 
     let mHealthPerc = 0
     useEffect(() => {
+        const listItems = document.querySelectorAll('li');
+
         const pictures = [monsterImg, gameframeImg, gamebgImg1, gamebgImg2, ability1Btn, ability2Btn, ability1BtnShadow, ability2BtnShadow, abilityLockBtn, healthBar, timerBar, fightBtn, Armor, Damage, Skills, shieldBtn, swordBtn, magicBtn, monster1, monster2, upgradeButton, coinsIcon, crystalsIcon, healthBarBack, AbilityLockTime];
-        pictures.forEach((picture) => {
-          const img = new Image();
-          img.src = picture;
+        const promises = pictures.map((picture) => {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = resolve;
+                img.src = picture;
+            });
+            });
+        Promise.all(promises).then(() => {
+            listItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                    item.addEventListener('animationend', () => {
+                        item.classList.remove('animate');
+                        item.classList.add('glowingBlock');
+                    });
+                }, index * 400);
+            });
+            setTimeout(function() {
+                document.getElementById('mainGameHolder').style.display ='block';
+            }, 2000);
         });
-      }, []);
+    }, []);
+    
+    
+    
     
     function getDamageUpgradePrice() {
         return Math.floor(basePrice * Math.pow(priceMultiplier, damage));
@@ -405,262 +431,267 @@ const ClickerGame = () => {
         <div style={{justifyContent: 'center',paddingLeft: 24, paddingRight: 24 }}>
             <div style={{ width:702, height: 724, userSelect:'none', position: 'relative', margin: 'auto', fontFamily: '"Almendra", serif'}}>
                 
-                <div style={{ backgroundImage: `url(${gamebgImg})`, width: '100%', height: '100%', position: 'absolute', backgroundRepeat:'no-repeat'}} />  
-                <div className='mainContainer' style={{ backgroundImage: `url(${gameframeImg})`, width: '100%', height:'100%', padding: '80px 40px 0px 40px', backgroundRepeat:'no-repeat', position: 'absolute'}}>
-                    <div  style={{ display: 'flex', height: 612, zIndex: 1}}>
-                        <div style={{ width: '65%', display: 'flex', flexDirection: 'column', }}>
-                            <div style={{ height: '65%' }}>
-                                <div style={{ paddingLeft: 58, paddingTop: 63, width: 38, color:"#deb738", fontSize: 17 }}>
-                                    <div>{monHealth}</div>
-                                    <div style={{ marginTop: -2 }}>{monArmor.toFixed(0)}</div>
-                                </div>
-                                <div style={{ position: 'relative' }}>
-                                    <img
-                                        draggable='false'
-                                        id='monsterId'
-                                        src={monster}
-                                        style={{ position: 'absolute',left: 33, top: -103, width: 350}}
-                                        alt="monster"
-                                        onMouseDown={monsterClick}
-                                    />
-
-                                </div>
-                            </div>
-                            <div style={{ height: '35%', display: 'flex' }}>
-                                <span style={{ width: '50%', display: 'flex' }}>
-                                    <span style={{ paddingLeft: 28 }}>
-                                        <span style={{  position: 'relative', top: 76, display: 'block', width: 100}} >
-                                            <img
-                                                draggable='false'
-                                                src={ability1BtnShadow}
-                                                style={{ position: 'absolute', paddingBottom: isSkill1shadVisible ? 0 : 4}}
-                                                alt="ability1BtnShadow"
-                                            />
-                                            <img
-                                                draggable='false'
-                                                src={ability1Btn}
-                                                style={{  position: 'absolute', right: 22, zIndex: 1}}
-                                                alt="ability1Btn"
-                                                onMouseDown={handleAbility1Btn}
-                                                onMouseUp={handleUnAbility1Btn}
-                                                onMouseOut={handleUnAbility1Btn}
-                                            />
-                                            <img
-                                                id='ability1Lock'
-                                                draggable='false'
-                                                src={abilityLockBtn}
-                                                style={{  position: 'absolute', right: 22, zIndex: 2}}
-                                                alt="abilityLockBtn"
-                                            />
-                                            <img
-                                                id='ability1LockCd'
-                                                draggable='false'
-                                                src={AbilityLockTime}
-                                                style={{  position: 'absolute', right: 22, zIndex: 2, visibility: isSkill1CdVisible ? 'visible' : 'hidden'}}
-                                                alt="ability1LockBtnCd"
-                                            />
-                                        </span>
-                                        <span style={{  position: 'relative', top: 76, right: -86, display: 'block', width: 100}} >
-                                            <img
-                                                draggable='false'
-                                                src={ability2BtnShadow}
-                                                style={{ position: 'absolute',left: 0, paddingBottom: isSkill2shadVisible ? 0 : 4}}
-                                                alt="ability2BtnShadow"
-                                            />
-                                            <img
-                                                draggable='false'
-                                                src={ability2Btn}
-                                                style={{ position: 'absolute',left: -2, zIndex: 1}}
-                                                alt="ability2Btn"
-                                                onMouseDown={handleAbility2Btn}
-                                                onMouseUp={handleUnAbility2Btn}
-                                                onMouseOut={handleUnAbility2Btn}
-                                            />
-                                            <img
-                                                id='ability2Lock'
-                                                draggable='false'
-                                                src={abilityLockBtn}
-                                                style={{  position: 'absolute', left: 0, zIndex: 2}}
-                                                alt="ability2LockBtn"
-                                            />
-                                            <img
-                                                id='ability2LockCd'
-                                                draggable='false'
-                                                src={AbilityLockTime}
-                                                style={{  position: 'absolute', left: 0, zIndex: 2, visibility: isSkill2CdVisible ? 'visible' : 'hidden'}}
-                                                alt="ability2LockCd"
-                                            />
-                                        </span>
-                                    </span>
-                                </span>
-                                <span style={{ width: '50%', display: 'flex' }}>
-                                    <span style={{  position: 'relative',left: -202, top: 71, display: 'block', width: '100%'}} >
-                                        <img
-                                            draggable='false'
-                                            id='healthBarBack'
-                                            src={healthBarBack}
-                                            style={{position: 'absolute', left: 270, top: -20, transform: "rotate(180deg)"}}
-                                            alt="healthBarBack"
-                                        />
-                                        <img
-                                            draggable='false'
-                                            id='healthBar'
-                                            src={healthBar}
-                                            style={{position: 'absolute', left: 270, top: -20, transform: "rotate(180deg)"}}
-                                            alt="healthBar"
-                                        />
-                                        <img
-                                            draggable='false'
-                                            id='timerBar'
-                                            src={timerBar}
-                                            style={{position: 'absolute', left: 270, top: -20, visibility: 'hidden'}}
-                                            alt="timerBar"
-                                        />
-                                        <img
-                                            draggable='false'
-                                            id='fightBtnId'
-                                            src={fightBtn}
-                                            style={{position: 'absolute', left: 226, top: 103, width: 168, zIndex: 5}}
-                                            alt="fightBtn"
-                                            onMouseDown={handleAssault}
-                                            onMouseUp={fightUnPressed}
-                                            onMouseOut={fightUnPressed}
-                                        />
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                        <div style={{ width: '35%', display: 'flex', flexDirection: 'column' }}>
-                            <div style={{ height: '15%', display: 'flex', paddingLeft: 26, paddingTop: 3 }}>
-                                
-                                <div style={{ display: 'flex', height: 30, borderRadius: 14, width: 68, marginRight: 10, paddingTop: 7, paddingLeft: 30 }}>
-                                    <span style={{ width: '100%', textAlign:'right', fontSize: 13, paddingTop: 1, color: '#deb738' }}>{formatNumber(gold)}</span>
-                                </div>
-                                
-                                <div style={{ display: 'flex', height: 30, borderRadius: 14, width: 68, marginRight: 10, paddingTop: 7, paddingLeft: 30 }}>
-                                    <span style={{ width: '100%', textAlign:'right', fontSize: 13, paddingTop: 1, color: '#87d927' }}>{formatNumber(crystals)}</span>
-                                </div>
-
-                            </div>
-                            <div style={{ height: '85%' }}>
+                  
+                <LoadingScreen />
+                <div id='mainGameHolder' style={{display: 'none'}}>
+                    <div style={{ backgroundImage: `url(${gamebgImg})`, width: '100%', height: '100%', position: 'absolute', backgroundRepeat:'no-repeat', zIndex: 7}} />
+                    <div className='mainContainer' style={{ backgroundImage: `url(${gameframeImg})`, width: '100%', height:'100%', padding: '80px 40px 0px 40px', backgroundRepeat:'no-repeat', position: 'absolute', zIndex: 8}}>
+                        <div  style={{ display: 'flex', height: 612, zIndex: 1}}>
+                            <div style={{ width: '65%', display: 'flex', flexDirection: 'column', }}>
                                 <div style={{ height: '65%' }}>
-                                    <div style={{position: 'relative', paddingLeft: 56, paddingTop: 18, width: '100%'}}>
-                                        <img
-                                            draggable='false'
-                                            id='SkillsImg'
-                                            src={Skills}
-                                            style={{position: 'absolute', visibility: isSkillVisible ? 'visible' : 'hidden'}}
-                                            alt="Skills"
-                                        />
-                                        <img
-                                            draggable='false'
-                                            id='ArmorImg'
-                                            src={Armor}
-                                            style={{position: 'absolute', visibility: isArmorVisible ? 'visible' : 'hidden'}}
-                                            alt="Armor"
-                                        />
-                                        <img
-                                            draggable='false'
-                                            id='DamageImg'
-                                            src={Damage}
-                                            style={{position: 'absolute', visibility: isDamageVisible ? 'visible' : 'hidden'}}
-                                            alt="Damage"
-                                        />
+                                    <div style={{ paddingLeft: 58, paddingTop: 63, width: 38, color:"#deb738", fontSize: 17 }}>
+                                        <div>{monHealth}</div>
+                                        <div style={{ marginTop: -2 }}>{monArmor.toFixed(0)}</div>
                                     </div>
-                                    <div style={{ padding: 30}}>
-                                        <div 
-                                            style={{fontFamily: '"Almendra", serif', color: '#6a6351', textAlign: 'center', fontSize: 17, position: 'relative'}}
-                                        >
-                                            <span style={{visibility: isDamageVisible ? 'visible' : 'hidden', position: 'absolute', left: 0}}>
-                                                Upgrade your damage to deal more harm to your enemies and overcome the toughest challenges.
+                                    <div style={{ position: 'relative' }}>
+                                        <img
+                                            draggable='false'
+                                            id='monsterId'
+                                            src={monster}
+                                            style={{ position: 'absolute',left: 33, top: -103, width: 350}}
+                                            alt="monster"
+                                            onMouseDown={monsterClick}
+                                        />
+
+                                    </div>
+                                </div>
+                                <div style={{ height: '35%', display: 'flex' }}>
+                                    <span style={{ width: '50%', display: 'flex' }}>
+                                        <span style={{ paddingLeft: 28 }}>
+                                            <span style={{  position: 'relative', top: 76, display: 'block', width: 100}} >
+                                                <img
+                                                    draggable='false'
+                                                    src={ability1BtnShadow}
+                                                    style={{ position: 'absolute', paddingBottom: isSkill1shadVisible ? 0 : 4}}
+                                                    alt="ability1BtnShadow"
+                                                />
+                                                <img
+                                                    draggable='false'
+                                                    src={ability1Btn}
+                                                    style={{  position: 'absolute', right: 22, zIndex: 1}}
+                                                    alt="ability1Btn"
+                                                    onMouseDown={handleAbility1Btn}
+                                                    onMouseUp={handleUnAbility1Btn}
+                                                    onMouseOut={handleUnAbility1Btn}
+                                                />
+                                                <img
+                                                    id='ability1Lock'
+                                                    draggable='false'
+                                                    src={abilityLockBtn}
+                                                    style={{  position: 'absolute', right: 22, zIndex: 2}}
+                                                    alt="abilityLockBtn"
+                                                />
+                                                <img
+                                                    id='ability1LockCd'
+                                                    draggable='false'
+                                                    src={AbilityLockTime}
+                                                    style={{  position: 'absolute', right: 22, zIndex: 2, visibility: isSkill1CdVisible ? 'visible' : 'hidden'}}
+                                                    alt="ability1LockBtnCd"
+                                                />
                                             </span>
-                                            <span style={{visibility: isArmorVisible ? 'visible' : 'hidden', position: 'absolute', left: 0}}>
-                                                Upgrade your armor to protect yourself from the dangers of the world and survive the most epic battles.
+                                            <span style={{  position: 'relative', top: 76, right: -86, display: 'block', width: 100}} >
+                                                <img
+                                                    draggable='false'
+                                                    src={ability2BtnShadow}
+                                                    style={{ position: 'absolute',left: 0, paddingBottom: isSkill2shadVisible ? 0 : 4}}
+                                                    alt="ability2BtnShadow"
+                                                />
+                                                <img
+                                                    draggable='false'
+                                                    src={ability2Btn}
+                                                    style={{ position: 'absolute',left: -2, zIndex: 1}}
+                                                    alt="ability2Btn"
+                                                    onMouseDown={handleAbility2Btn}
+                                                    onMouseUp={handleUnAbility2Btn}
+                                                    onMouseOut={handleUnAbility2Btn}
+                                                />
+                                                <img
+                                                    id='ability2Lock'
+                                                    draggable='false'
+                                                    src={abilityLockBtn}
+                                                    style={{  position: 'absolute', left: 0, zIndex: 2}}
+                                                    alt="ability2LockBtn"
+                                                />
+                                                <img
+                                                    id='ability2LockCd'
+                                                    draggable='false'
+                                                    src={AbilityLockTime}
+                                                    style={{  position: 'absolute', left: 0, zIndex: 2, visibility: isSkill2CdVisible ? 'visible' : 'hidden'}}
+                                                    alt="ability2LockCd"
+                                                />
                                             </span>
-                                            <span style={{visibility: isSkillVisible ? 'visible' : 'hidden', position: 'absolute', left: 0}}>
-                                                Unlock your skills to unleash your full potential and master the art of combat.
-                                            </span>
-                                            
+                                        </span>
+                                    </span>
+                                    <span style={{ width: '50%', display: 'flex' }}>
+                                        <span style={{  position: 'relative',left: -202, top: 71, display: 'block', width: '100%'}} >
+                                            <img
+                                                draggable='false'
+                                                id='healthBarBack'
+                                                src={healthBarBack}
+                                                style={{position: 'absolute', left: 270, top: -20, transform: "rotate(180deg)"}}
+                                                alt="healthBarBack"
+                                            />
+                                            <img
+                                                draggable='false'
+                                                id='healthBar'
+                                                src={healthBar}
+                                                style={{position: 'absolute', left: 270, top: -20, transform: "rotate(180deg)"}}
+                                                alt="healthBar"
+                                            />
+                                            <img
+                                                draggable='false'
+                                                id='timerBar'
+                                                src={timerBar}
+                                                style={{position: 'absolute', left: 270, top: -20, visibility: 'hidden'}}
+                                                alt="timerBar"
+                                            />
+                                            <img
+                                                draggable='false'
+                                                id='fightBtnId'
+                                                src={fightBtn}
+                                                style={{position: 'absolute', left: 226, top: 103, width: 168, zIndex: 5}}
+                                                alt="fightBtn"
+                                                onMouseDown={handleAssault}
+                                                onMouseUp={fightUnPressed}
+                                                onMouseOut={fightUnPressed}
+                                            />
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div style={{ width: '35%', display: 'flex', flexDirection: 'column' }}>
+                                <div style={{ height: '15%', display: 'flex', paddingLeft: 26, paddingTop: 3 }}>
+                                    
+                                    <div style={{ display: 'flex', height: 30, borderRadius: 14, width: 68, marginRight: 10, paddingTop: 7, paddingLeft: 30 }}>
+                                        <span style={{ width: '100%', textAlign:'right', fontSize: 13, paddingTop: 1, color: '#deb738' }}>{formatNumber(gold)}</span>
+                                    </div>
+                                    
+                                    <div style={{ display: 'flex', height: 30, borderRadius: 14, width: 68, marginRight: 10, paddingTop: 7, paddingLeft: 30 }}>
+                                        <span style={{ width: '100%', textAlign:'right', fontSize: 13, paddingTop: 1, color: '#87d927' }}>{formatNumber(crystals)}</span>
+                                    </div>
+
+                                </div>
+                                <div style={{ height: '85%' }}>
+                                    <div style={{ height: '65%' }}>
+                                        <div style={{position: 'relative', paddingLeft: 56, paddingTop: 18, width: '100%'}}>
+                                            <img
+                                                draggable='false'
+                                                id='SkillsImg'
+                                                src={Skills}
+                                                style={{position: 'absolute', visibility: isSkillVisible ? 'visible' : 'hidden'}}
+                                                alt="Skills"
+                                            />
+                                            <img
+                                                draggable='false'
+                                                id='ArmorImg'
+                                                src={Armor}
+                                                style={{position: 'absolute', visibility: isArmorVisible ? 'visible' : 'hidden'}}
+                                                alt="Armor"
+                                            />
+                                            <img
+                                                draggable='false'
+                                                id='DamageImg'
+                                                src={Damage}
+                                                style={{position: 'absolute', visibility: isDamageVisible ? 'visible' : 'hidden'}}
+                                                alt="Damage"
+                                            />
+                                        </div>
+                                        <div style={{ padding: 30}}>
+                                            <div 
+                                                style={{fontFamily: '"Almendra", serif', color: '#6a6351', textAlign: 'center', fontSize: 17, position: 'relative'}}
+                                            >
+                                                <span style={{visibility: isDamageVisible ? 'visible' : 'hidden', position: 'absolute', left: 0}}>
+                                                    Upgrade your damage to deal more harm to your enemies and overcome the toughest challenges.
+                                                </span>
+                                                <span style={{visibility: isArmorVisible ? 'visible' : 'hidden', position: 'absolute', left: 0}}>
+                                                    Upgrade your armor to protect yourself from the dangers of the world and survive the most epic battles.
+                                                </span>
+                                                <span style={{visibility: isSkillVisible ? 'visible' : 'hidden', position: 'absolute', left: 0}}>
+                                                    Unlock your skills to unleash your full potential and master the art of combat.
+                                                </span>
+                                                
+                                            </div>
+                                        </div>
+                                        <div style={{position: 'relative', paddingLeft: 56, paddingTop: 139, width: '100%', zIndex: 1}}>
+                                            <img
+                                                draggable='false'
+                                                id='crystalsIconPrice'
+                                                src={crystalsIcon}
+                                                style={{position: 'absolute', left: 85, width: 14, zIndex: 1,top: 119, visibility: isCoinsVisible ? 'hidden' : 'visible'}}
+                                                alt="crystalsIconPrice"
+                                            />
+                                            <img
+                                                draggable='false'
+                                                id='coinIconPrice'
+                                                src={coinsIcon}
+                                                style={{position: 'absolute', left: 85, width: 16, zIndex: 1,top: 122, visibility: isCoinsVisible ? 'visible' : 'hidden'}}
+                                                alt="coinIconPrice"
+                                            />
+                                            <span  style={{position: 'absolute', left: 104, width: 32, textAlign: 'end' , zIndex: 1, top: 117, fontSize: 13, color: priceColor ? 'rgb(222, 183, 56)' : 'rgb(135, 217, 39)'}}>{formatNumber(price)}</span>
+                                            <img
+                                                draggable='false'
+                                                id='swordBtn'
+                                                src={swordBtn}
+                                                style={{position: 'absolute', left: 78, width: 62, zIndex: 1}}
+                                                alt="swordBtn"
+                                                stat="damage"
+                                                onMouseDown={pickDamageStat}
+                                                onMouseUp={btnUnPressed}
+                                                onMouseOut={btnUnPressed}
+                                            />
+                                            <img
+                                                draggable='false'
+                                                id='shieldBtn'
+                                                src={shieldBtn}
+                                                style={{position: 'absolute', left: 22, width: 55, bottom: -34}}
+                                                alt="shieldBtn"
+                                                stat="armor"
+                                                onMouseDown={pickArmorStat}
+                                                onMouseUp={btnUnPressed}
+                                                onMouseOut={btnUnPressed}
+                                            />
+                                            <img
+                                                draggable='false'
+                                                id='magicBtn'
+                                                src={magicBtn}
+                                                style={{position: 'absolute', left: 139, width: 55, bottom: -36}}
+                                                alt="magicBtn"
+                                                stat="skill"
+                                                onMouseDown={pickSkillStat}
+                                                onMouseUp={btnUnPressed}
+                                                onMouseOut={btnUnPressed}
+                                            />
+
+                                        </div>
+                                        <div style={{position: 'relative'}}>
+                                            <img style={{position: 'absolute', paddingTop: 56, paddingLeft: 15, width: 190 }}
+                                                draggable='false'
+                                                id='upgradeButton'
+                                                src={upgradeButton}
+                                                alt="upgradeButton"
+                                                onMouseDown={handleUpgrade}
+                                                onMouseUp={btnUnPressed}
+                                                onMouseOut={btnUnPressed}
+                                            />
+
+                                        </div>
+
+                                    </div>
+                                    <div style={{ height: '35%' }}>
+                                        <div style={{ paddingLeft: 110, paddingTop: 58, color:"#391e12", fontSize: 14,paddingRight: 24, overflow: 'hidden' }}>
+                                            <div style={{ marginTop: -2, overflow: 'hidden' }}>{formatDamage(damage)}</div>
+                                            <div style={{ marginTop: 7, overflow: 'hidden' }}>{armor}</div>
+                                            <div style={{ marginTop: 7, overflow: 'hidden' }}>{critDamage}</div>
+                                            <div style={{ marginTop: 7, overflow: 'hidden' }}>{critChance}</div>
                                         </div>
                                     </div>
-                                    <div style={{position: 'relative', paddingLeft: 56, paddingTop: 139, width: '100%', zIndex: 1}}>
-                                        <img
-                                            draggable='false'
-                                            id='crystalsIconPrice'
-                                            src={crystalsIcon}
-                                            style={{position: 'absolute', left: 85, width: 14, zIndex: 1,top: 119, visibility: isCoinsVisible ? 'hidden' : 'visible'}}
-                                            alt="crystalsIconPrice"
-                                        />
-                                        <img
-                                            draggable='false'
-                                            id='coinIconPrice'
-                                            src={coinsIcon}
-                                            style={{position: 'absolute', left: 85, width: 16, zIndex: 1,top: 122, visibility: isCoinsVisible ? 'visible' : 'hidden'}}
-                                            alt="coinIconPrice"
-                                        />
-                                        <span  style={{position: 'absolute', left: 104, width: 32, textAlign: 'end' , zIndex: 1, top: 117, fontSize: 13, color: priceColor ? 'rgb(222, 183, 56)' : 'rgb(135, 217, 39)'}}>{formatNumber(price)}</span>
-                                        <img
-                                            draggable='false'
-                                            id='swordBtn'
-                                            src={swordBtn}
-                                            style={{position: 'absolute', left: 78, width: 62, zIndex: 1}}
-                                            alt="swordBtn"
-                                            stat="damage"
-                                            onMouseDown={pickDamageStat}
-                                            onMouseUp={btnUnPressed}
-                                            onMouseOut={btnUnPressed}
-                                        />
-                                        <img
-                                            draggable='false'
-                                            id='shieldBtn'
-                                            src={shieldBtn}
-                                            style={{position: 'absolute', left: 22, width: 55, bottom: -34}}
-                                            alt="shieldBtn"
-                                            stat="armor"
-                                            onMouseDown={pickArmorStat}
-                                            onMouseUp={btnUnPressed}
-                                            onMouseOut={btnUnPressed}
-                                        />
-                                        <img
-                                            draggable='false'
-                                            id='magicBtn'
-                                            src={magicBtn}
-                                            style={{position: 'absolute', left: 139, width: 55, bottom: -36}}
-                                            alt="magicBtn"
-                                            stat="skill"
-                                            onMouseDown={pickSkillStat}
-                                            onMouseUp={btnUnPressed}
-                                            onMouseOut={btnUnPressed}
-                                        />
-
-                                    </div>
-                                    <div style={{position: 'relative'}}>
-                                        <img style={{position: 'absolute', paddingTop: 56, paddingLeft: 15, width: 190 }}
-                                            draggable='false'
-                                            id='upgradeButton'
-                                            src={upgradeButton}
-                                            alt="upgradeButton"
-                                            onMouseDown={handleUpgrade}
-                                            onMouseUp={btnUnPressed}
-                                            onMouseOut={btnUnPressed}
-                                        />
-
-                                    </div>
-
+                                    
                                 </div>
-                                <div style={{ height: '35%' }}>
-                                    <div style={{ paddingLeft: 110, paddingTop: 58, color:"#391e12", fontSize: 14,paddingRight: 24, overflow: 'hidden' }}>
-                                        <div style={{ marginTop: -2, overflow: 'hidden' }}>{formatDamage(damage)}</div>
-                                        <div style={{ marginTop: 7, overflow: 'hidden' }}>{armor}</div>
-                                        <div style={{ marginTop: 7, overflow: 'hidden' }}>{critDamage}</div>
-                                        <div style={{ marginTop: 7, overflow: 'hidden' }}>{critChance}</div>
-                                    </div>
-                                </div>
-                                
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
 
