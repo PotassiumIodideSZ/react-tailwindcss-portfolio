@@ -83,7 +83,7 @@ const ClickerGame = () => {
                 img.onload = resolve;
                 img.src = picture;
             });
-            });
+        });
         Promise.all(promises).then(() => {
             console.log(listItems);
             listItems.forEach((item, index) => {
