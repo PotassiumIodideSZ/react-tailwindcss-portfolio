@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== "/snakegame" && (
+      {location.pathname !== "/snakegame" && location.pathname !== "/bashnyaslov" && (
         <div className=" bg-secondary-light dark:bg-primary-dark transition duration-300">
           <ScrollToTop />
           <AppHeader />
