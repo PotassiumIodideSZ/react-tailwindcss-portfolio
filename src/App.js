@@ -9,6 +9,7 @@ import UseScrollToTop from "./hooks/useScrollToTop";
 import SnakeGame from "./SnakeGame.js";
 import React from "react";
 import { useLocation } from "react-router-dom";
+import WordMatch from "./WordMatch/WordMatch";
 
 const About = lazy(() => import("./pages/AboutMe"));
 const Contact = lazy(() => import("./pages/Contact.jsx"));
@@ -47,6 +48,7 @@ function App() {
         </div>
       )}
       <Routes>
+        <Route path="/bashnyaslov" element={<WordMatch />} />
         <Route path="/snakegame" element={<SnakeGame />} />
       </Routes>
     </div>
