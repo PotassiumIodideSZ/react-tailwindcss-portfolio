@@ -1,0 +1,39 @@
+/* WordMatchingGame.css */
+body {
+    user-select: none;
+  }
+
+.game-board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+  }
+  
+  .square {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .square.selected {
+    background-color: lightblue;
+  }  
+  .square.selected:hover {
+    background-color: rgb(48, 136, 165);
+  }  
+  
+.row {
+  display: flex;
+}
+
+
+.square:hover {
+  background-color: #f5f5f5;
+}
