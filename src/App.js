@@ -10,6 +10,7 @@ import SnakeGame from "./SnakeGame.js";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import WordMatch from "./WordMatch/WordMatch";
+import Phaser2048 from "./Phaser2048/main.js";
 
 const About = lazy(() => import("./pages/AboutMe"));
 const Contact = lazy(() => import("./pages/Contact.jsx"));
@@ -22,7 +23,7 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== "/snakegame" && location.pathname !== "/bashnyaslov" && (
+      {location.pathname !== "/snakegame" && location.pathname !== "/bashnyaslov" && location.pathname !== "/phaser2048" && (
         <div className=" bg-secondary-light dark:bg-primary-dark transition duration-300">
           <ScrollToTop />
           <AppHeader />
@@ -50,6 +51,7 @@ function App() {
       <Routes>
         <Route path="/bashnyaslov" element={<WordMatch />} />
         <Route path="/snakegame" element={<SnakeGame />} />
+        <Route path="/phaser2048" element={<Phaser2048 />} />
       </Routes>
     </div>
   );
