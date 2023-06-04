@@ -10,7 +10,7 @@ import SnakeGame from "./SnakeGame.js";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import WordMatch from "./WordMatch/WordMatch";
-import Phaser2048 from "./Phaser2048/main.js";
+import Phaser2048 from "./Phaser2048/Main.js";
 
 const About = lazy(() => import("./pages/AboutMe"));
 const Contact = lazy(() => import("./pages/Contact.jsx"));

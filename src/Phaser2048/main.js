@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Phaser from 'phaser'
 import { IonPhaser } from '@ion-phaser/react'
-import GameScene from './scenes/GameScene.js'
+import { GameSceneClass, testvar } from './scene/GameScene'
 
 class Phaser2048 extends Component {
   state = {
@@ -9,12 +9,8 @@ class Phaser2048 extends Component {
     game: {
       width: "100%",
       height: "100%",
-      type: Phaser.AUTO,
-      scene: {
-        preload: GameScene.preload,
-        create: GameScene.create,
-        update: GameScene.update
-      }
+      type: Phaser.CANVAS,
+      scene: GameSceneClass
     }
   }
 
