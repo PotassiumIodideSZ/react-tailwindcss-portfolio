@@ -78,11 +78,11 @@ export function updateTileStyle(tile) {
     tile.rect.clear();
     tile.rect.fillStyle(style.fillColor);
     tile.rect.fillRoundedRect(
-      tile.j * tileSize -
+      tile.x * tileSize -
         (boardSize * tileSize) / 2 +
         tileSize / 2 -
         (tileSize * 0.9) / 2,
-      tile.i * tileSize -
+      tile.y * tileSize -
         (boardSize * tileSize) / 2 +
         tileSize / 2 -
         (tileSize * 0.9) / 2,
