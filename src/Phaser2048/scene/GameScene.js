@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import GameStart from "./GameStart.js";
+import GameStart, {moveDuration} from "./GameStart.js";
 import { moveTiles } from "./TilesMoves.js";
 import { updateTileStyle } from "./TileStyle.js";
 
@@ -37,18 +37,66 @@ export class GameSceneClass extends Phaser.Scene {
   init() {
     GameStartClass.gameInit(this);
 
+    let canMove = true; // flag variable to indicate if a move is allowed
+
+    function moveTilesWrapper(x, y, scene) {
+      if (canMove) {
+        moveTiles(x, y, scene);
+        canMove = false;
+        setTimeout(() => {
+          canMove = true;
+        }, moveDuration); // set flag to true after 0.3 seconds
+      }
+    }
+    //Keyboard
     const cursors = this.input.keyboard.createCursorKeys();
     cursors.left.on("down", () => {
-      moveTiles(-1, 0, this);
+      moveTilesWrapper(-1, 0, this);
     });
+    
     cursors.right.on("down", () => {
-      moveTiles(1, 0, this);
+      moveTilesWrapper(1, 0, this);
     });
+    
     cursors.up.on("down", () => {
-      moveTiles(0, -1, this);
+      moveTilesWrapper(0, -1, this);
     });
+    
     cursors.down.on("down", () => {
-      moveTiles(0, 1, this);
+      moveTilesWrapper(0, 1, this);
+    });
+
+    //Swipes
+    const MIN_SWIPE_DISTANCE = 50;
+
+    let swipeStartX, swipeStartY;
+
+    this.input.on("pointerdown", (pointer) => {
+      swipeStartX = pointer.x;
+      swipeStartY = pointer.y;
+    });
+
+    this.input.on("pointerup", (pointer) => {
+      const swipeEndX = pointer.x;
+      const swipeEndY = pointer.y;
+
+      const deltaX = swipeEndX - swipeStartX;
+      const deltaY = swipeEndY - swipeStartY;
+
+      if (
+        Math.abs(deltaX) < MIN_SWIPE_DISTANCE &&
+        Math.abs(deltaY) < MIN_SWIPE_DISTANCE
+      ) {
+        return;
+      }
+
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // horizontal
+        moveTilesWrapper(Math.sign(deltaX), 0, this);
+      } else {
+        // vertical
+        moveTilesWrapper(0, Math.sign(deltaY), this);
+      }
     });
   }
 }

@@ -1,33 +1,32 @@
 import { isGameOver } from "./GameOver.js";
+import { gameWon } from "./GameWon.js";
 import { updateTileStyle } from "./TileStyle.js";
 import { updateScore } from "./Score.js";
-import { moveTileVisually } from "./VisualBoard.js";
+import { moveTilesVisually } from "./VisualBoard.js";
 
 export function isValidPosition(i, j, boardSize) {
   return i >= 0 && i < boardSize && j >= 0 && j < boardSize;
 }
 
-function swapTiles(tile1, tile2) {
+function swapTiles(tile1, tile2, toBeUpdated) {
   const tempValue = tile1.value;
   tile1.value = tile2.value;
   tile2.value = tempValue;
-  updateTileStyle(tile1);
-  updateTileStyle(tile2);
-
-  tile1.text.setText("");
-  tile2.text.setText(tile2.value);
+  toBeUpdated.push(tile1);
+  toBeUpdated.push(tile2);
 }
 
-function mergeTiles(tile1, tile2, gameScene) {
+function mergeTiles(tile1, tile2, toBeUpdated, gameScene) {
   tile2.value *= 2;
   tile1.value = 0;
   tile2.merged = true;
-  updateTileStyle(tile1);
-  updateTileStyle(tile2);
-  updateScore(tile2.value, gameScene);
+  if (tile2.value === 2048){
+    gameWon(gameScene);
+  }
 
-  tile1.text.setText("");
-  tile2.text.setText(tile2.value);
+  updateScore(tile2.value, gameScene);
+  toBeUpdated.push(tile1);
+  toBeUpdated.push(tile2);
 }
 
 export function moveTiles(deltaX, deltaY, gameScene) {
@@ -47,30 +46,37 @@ export function moveTiles(deltaX, deltaY, gameScene) {
   const incY = deltaY > 0 ? -1 : 1;
 
   let toBeMoved = [];
+  let toBeUpdated = [];
+
+  let toBePushed = false;
 
   for (let i = startY; i !== endY; i += incY) {
     for (let j = startX; j !== endX; j += incX) {
-      const tile = gameScene.board[i][j];
+      let tileMerged = false;
+      const tile = Object.assign({}, gameScene.board[i][j]);
+      
       if (tile.value === 0) {
         continue;
       }
       let nextI = i + deltaY;
       let nextJ = j + deltaX;
-      toBeMoved.push({ x: j, y: i });
       while (isValidPosition(nextI, nextJ, gameScene.boardSize)) {
         const nextTile = gameScene.board[nextI][nextJ];
         const curTile = gameScene.board[i][j];
 
         if (nextTile.value === 0) {
-          swapTiles(curTile, nextTile);
-          moved = true;
+          swapTiles(curTile, nextTile, toBeUpdated);
+          toBePushed = true;
         } else if (
           nextTile.value === curTile.value &&
           curTile.merged === false &&
           nextTile.merged === false
         ) {
-          mergeTiles(curTile, nextTile, gameScene);
-          moved = true;
+          mergeTiles(curTile, nextTile, toBeUpdated, gameScene);
+          toBePushed = true;
+          tileMerged = true;
+          nextI += deltaY;
+          nextJ += deltaX;
           break;
         } else {
           break;
@@ -81,14 +87,25 @@ export function moveTiles(deltaX, deltaY, gameScene) {
         nextI += deltaY;
         nextJ += deltaX;
       }
+      if (toBePushed) {
+        moved = true;
+        toBeMoved.push({ tile: tile, toX: nextJ-deltaX, toY: nextI-deltaY, merged: tileMerged});
+      }
+      toBePushed = false;
     }
   }
+
+  moveTilesVisually(toBeMoved, gameScene);
   
-console.log(toBeMoved);
-
-  if (moved) {
-    gameScene.addNewTile();
-
-    isGameOver(gameScene);
-  }
+  setTimeout(function turnEnd() {
+    if (moved) {
+      toBeUpdated.forEach(function(tile){
+        updateTileStyle(tile)
+      })
+  
+      gameScene.addNewTile();
+  
+      isGameOver(gameScene);
+    }
+  }, gameScene.moveDuration);
 }

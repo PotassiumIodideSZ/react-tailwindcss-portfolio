@@ -1,10 +1,12 @@
 export const tileSize = 128;
 export const boardSize = 4;
+export const moveDuration = 150;
 
 export default class GameStart {
   gameInit(gameScene) {
     gameScene.tileSize = tileSize;
     gameScene.boardSize = boardSize;
+    gameScene.moveDuration = moveDuration;
     gameScene.board = [];
 
     //Board
@@ -33,6 +35,8 @@ export default class GameStart {
     );
     boardRect.add(boardBackground);
     boardRect.add(boardBackground);
+
+
     //GameOver screen
     const gameOverContainer = gameScene.add.container(
       gameScene.cameras.main.centerX,
@@ -41,23 +45,52 @@ export default class GameStart {
 
     gameOverContainer.setName("gameOverContainer");
     gameOverContainer.visible = false;
-    const gameOverBackground = gameScene.add.rectangle(
-      0,
-      0,
-      gameScene.tileSize * gameScene.boardSize,
-      gameScene.tileSize * gameScene.boardSize,
-      0x000,
-      0.5
+    const gameOverBackground = gameScene.add.graphics();
+    gameOverBackground.fillStyle(0x000, 0.4);
+    gameOverBackground.fillRoundedRect(
+      (-gameScene.tileSize * gameScene.boardSize) / 2 - boardpadding,
+      (-gameScene.tileSize * gameScene.boardSize) / 2 - boardpadding,
+      gameScene.tileSize * gameScene.boardSize + boardpadding * 2,
+      gameScene.tileSize * gameScene.boardSize + boardpadding * 2,
+      16
     );
-    gameOverBackground.setOrigin(0.5);
     gameOverContainer.add(gameOverBackground);
+    
 
-    const gameOverText = gameScene.add.text(0, 0, "GAME OVER", {
-      fontSize: "48px",
+    const gameOverText = gameScene.add.text(0, 0, "Нельзя сделать ход", {
+      fontSize: "42px",
       fill: "#fff",
     });
     gameOverText.setOrigin(0.5);
     gameOverContainer.add(gameOverText);
+
+    //Win screen
+    const winContainer = gameScene.add.container(
+      gameScene.cameras.main.centerX,
+      gameScene.cameras.main.centerY
+    );
+
+    winContainer.setName("winContainer");
+    winContainer.visible = false;
+    const winBackground = gameScene.add.graphics();
+    winBackground.fillStyle(0xffffff, 0.8);
+    winBackground.fillRoundedRect(
+      (-gameScene.tileSize * gameScene.boardSize) / 2 - boardpadding,
+      (-gameScene.tileSize * gameScene.boardSize) / 2 - boardpadding,
+      gameScene.tileSize * gameScene.boardSize + boardpadding * 2,
+      gameScene.tileSize * gameScene.boardSize + boardpadding * 2,
+      16
+    );
+    winContainer.add(winBackground);
+    
+
+    const winText = gameScene.add.text(0, 0, "Уровень пройден", {
+      fontSize: "42px",
+      fill: "#000",
+    });
+    winText.setOrigin(0.5);
+    winContainer.add(winText);
+
 
     //Score field
 
@@ -100,16 +133,19 @@ export default class GameStart {
       gameScene.board.push([]);
       for (let j = 0; j < gameScene.boardSize; j++) {
         const tileRect = gameScene.add.graphics();
+        tileRect.rectX = j * gameScene.tileSize -
+        (gameScene.boardSize * gameScene.tileSize) / 2 +
+        gameScene.tileSize / 2 -
+        (gameScene.tileSize * 0.9) / 2;
+        tileRect.rectY = 
+        i * gameScene.tileSize -
+          (gameScene.boardSize * gameScene.tileSize) / 2 +
+          gameScene.tileSize / 2 -
+          (gameScene.tileSize * 0.9) / 2
         tileRect.fillStyle(0xdbd2c7);
         tileRect.fillRoundedRect(
-          j * gameScene.tileSize -
-            (gameScene.boardSize * gameScene.tileSize) / 2 +
-            gameScene.tileSize / 2 -
-            (gameScene.tileSize * 0.9) / 2,
-          i * gameScene.tileSize -
-            (gameScene.boardSize * gameScene.tileSize) / 2 +
-            gameScene.tileSize / 2 -
-            (gameScene.tileSize * 0.9) / 2,
+          tileRect.rectX,
+          tileRect.rectY,
           gameScene.tileSize * 0.9,
           gameScene.tileSize * 0.9,
           16
@@ -129,6 +165,7 @@ export default class GameStart {
             fontSize: `${gameScene.tileSize * 0.7}px`,
           }
         );
+        
         tileText.setOrigin(0.5);
         boardRect.add(tileText);
 
