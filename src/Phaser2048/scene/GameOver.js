@@ -6,7 +6,6 @@ function gameOver(gameScene) {
 }
 
 export function isGameOver(gameScene) {
-  // Check if there are any empty positions on the board
   for (let i = 0; i < gameScene.boardSize; i++) {
     for (let j = 0; j < gameScene.boardSize; j++) {
       if (gameScene.board[i][j].value === 0) {
@@ -15,7 +14,6 @@ export function isGameOver(gameScene) {
     }
   }
 
-  // Check if there are any adjacent tiles with the same value
   for (let i = 0; i < gameScene.boardSize; i++) {
     for (let j = 0; j < gameScene.boardSize; j++) {
       const tile = gameScene.board[i][j];

@@ -1,8 +1,8 @@
 import { tileSize, boardSize } from "./GameStart.js";
+import Tile from "./TileCreation.js";
 
 export function updateTileStyle(tile) {
   const defaultFontSize = tileSize * 0.7;
-  // Define an object that maps tile values to styles
   const styles = {
     0: {
       fillColor: 0xdbd2c7,
@@ -74,30 +74,25 @@ export function updateTileStyle(tile) {
   }
 
   if (style) {
+    const x = tile.rect.rectX;
+    const y = tile.rect.rectY;
     tile.rect.clear();
     tile.rect.fillStyle(style.fillColor);
     tile.rect.fillRoundedRect(
-      tile.x * tileSize -
-        (boardSize * tileSize) / 2 +
-        tileSize / 2 -
-        (tileSize * 0.9) / 2,
-      tile.y * tileSize -
-        (boardSize * tileSize) / 2 +
-        tileSize / 2 -
-        (tileSize * 0.9) / 2,
+      x,
+      y,
       tileSize * 0.9,
       tileSize * 0.9,
       16
     );
     tile.text.setStyle({ fontSize: style.fontSize, fill: style.fontColor });
     if (tile.value !== 0) tile.text.setText(tile.value);
-    else tile.text.setText("")
+    else tile.text.setText("");
   }
 }
 
 export function updateVisualTileStyle(tile) {
   const defaultFontSize = tileSize * 0.7;
-  // Define an object that maps tile values to styles
   const styles = {
     0: {
       fillColor: 0xdbd2c7,

@@ -1,13 +1,11 @@
 import Phaser from "phaser";
-import GameStart, {moveDuration} from "./GameStart.js";
+import { gameCreate, moveDuration } from "./GameStart.js";
 import { moveTiles } from "./TilesMoves.js";
 import { updateTileStyle } from "./TileStyle.js";
 
-const GameStartClass = new GameStart();
-
 export class GameSceneClass extends Phaser.Scene {
-  constructor() {
-    super("GameScene");
+  constructor(options) {
+    super(options);
   }
 
   addNewTile() {
@@ -23,7 +21,6 @@ export class GameSceneClass extends Phaser.Scene {
     const randomIndex = Math.floor(Math.random() * emptyPositions.length);
     const { i, j } = emptyPositions[randomIndex];
 
-    // Set the value of the tile at the chosen position to a random value (2 or 4)
     const tile = this.board[i][j];
     tile.value = Math.random() < 0.9 ? 2 : 4;
     tile.text.setText(tile.value);
@@ -31,13 +28,10 @@ export class GameSceneClass extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setBackgroundColor("#ffffff"); // Set background color to white
-  }
+    this.cameras.main.setBackgroundColor("#ffffff");
+    gameCreate(this);
 
-  init() {
-    GameStartClass.gameInit(this);
-
-    let canMove = true; // flag variable to indicate if a move is allowed
+    let canMove = true;
 
     function moveTilesWrapper(x, y, scene) {
       if (canMove) {
@@ -45,7 +39,7 @@ export class GameSceneClass extends Phaser.Scene {
         canMove = false;
         setTimeout(() => {
           canMove = true;
-        }, moveDuration); // set flag to true after 0.3 seconds
+        }, moveDuration);
       }
     }
     //Keyboard
@@ -53,15 +47,15 @@ export class GameSceneClass extends Phaser.Scene {
     cursors.left.on("down", () => {
       moveTilesWrapper(-1, 0, this);
     });
-    
+
     cursors.right.on("down", () => {
       moveTilesWrapper(1, 0, this);
     });
-    
+
     cursors.up.on("down", () => {
       moveTilesWrapper(0, -1, this);
     });
-    
+
     cursors.down.on("down", () => {
       moveTilesWrapper(0, 1, this);
     });
@@ -91,10 +85,8 @@ export class GameSceneClass extends Phaser.Scene {
       }
 
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        // horizontal
         moveTilesWrapper(Math.sign(deltaX), 0, this);
       } else {
-        // vertical
         moveTilesWrapper(0, Math.sign(deltaY), this);
       }
     });

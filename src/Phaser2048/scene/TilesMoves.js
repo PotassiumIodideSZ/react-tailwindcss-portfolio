@@ -1,8 +1,8 @@
 import { isGameOver } from "./GameOver.js";
-import { gameWon } from "./GameWon.js";
+import { isGameWon } from "./GameWon.js";
 import { updateTileStyle } from "./TileStyle.js";
 import { updateScore } from "./Score.js";
-import { moveTilesVisually } from "./VisualBoard.js";
+import { moveTilesVisually } from "./VisualMoves.js";
 
 export function isValidPosition(i, j, boardSize) {
   return i >= 0 && i < boardSize && j >= 0 && j < boardSize;
@@ -20,9 +20,7 @@ function mergeTiles(tile1, tile2, toBeUpdated, gameScene) {
   tile2.value *= 2;
   tile1.value = 0;
   tile2.merged = true;
-  if (tile2.value === 2048){
-    gameWon(gameScene);
-  }
+  isGameWon(tile2, gameScene);
 
   updateScore(tile2.value, gameScene);
   toBeUpdated.push(tile1);
@@ -37,7 +35,6 @@ export function moveTiles(deltaX, deltaY, gameScene) {
       tile.merged = false;
     }
   }
-  // Determine order in which to iterate over tiles based on movement direction
   const startX = deltaX > 0 ? gameScene.boardSize - 1 : 0;
   const endX = deltaX > 0 ? -1 : gameScene.boardSize;
   const incX = deltaX > 0 ? -1 : 1;
@@ -94,7 +91,6 @@ export function moveTiles(deltaX, deltaY, gameScene) {
       toBePushed = false;
     }
   }
-
   moveTilesVisually(toBeMoved, gameScene);
   
   setTimeout(function turnEnd() {
@@ -102,7 +98,6 @@ export function moveTiles(deltaX, deltaY, gameScene) {
       toBeUpdated.forEach(function(tile){
         updateTileStyle(tile)
       })
-  
       gameScene.addNewTile();
   
       isGameOver(gameScene);

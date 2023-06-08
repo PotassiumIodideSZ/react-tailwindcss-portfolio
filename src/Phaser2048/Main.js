@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Phaser from 'phaser'
 import { IonPhaser } from '@ion-phaser/react'
-import { GameSceneClass, testvar } from './scene/GameScene'
+import { GameSceneClass } from './scene/GameScene'
 
 class Phaser2048 extends Component {
   state = {
