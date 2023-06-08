@@ -51,7 +51,7 @@ export function moveTiles(deltaX, deltaY, gameScene) {
     for (let j = startX; j !== endX; j += incX) {
       let tileMerged = false;
       const tile = Object.assign({}, gameScene.board[i][j]);
-      
+
       if (tile.value === 0) {
         continue;
       }
@@ -86,20 +86,27 @@ export function moveTiles(deltaX, deltaY, gameScene) {
       }
       if (toBePushed) {
         moved = true;
-        toBeMoved.push({ tile: tile, toX: nextJ-deltaX, toY: nextI-deltaY, merged: tileMerged});
+        toBeMoved.push({
+          tile: tile,
+          toX: nextJ - deltaX,
+          toY: nextI - deltaY,
+          merged: tileMerged,
+        });
       }
       toBePushed = false;
     }
   }
+
   moveTilesVisually(toBeMoved, gameScene);
-  
+
   setTimeout(function turnEnd() {
     if (moved) {
-      toBeUpdated.forEach(function(tile){
-        updateTileStyle(tile)
-      })
+      toBeUpdated.forEach(function(tile) {
+        updateTileStyle(tile);
+      });
+
       gameScene.addNewTile();
-  
+
       isGameOver(gameScene);
     }
   }, gameScene.moveDuration);

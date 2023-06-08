@@ -78,13 +78,7 @@ export function updateTileStyle(tile) {
     const y = tile.rect.rectY;
     tile.rect.clear();
     tile.rect.fillStyle(style.fillColor);
-    tile.rect.fillRoundedRect(
-      x,
-      y,
-      tileSize * 0.9,
-      tileSize * 0.9,
-      16
-    );
+    tile.rect.fillRoundedRect(x, y, tileSize * 0.9, tileSize * 0.9, 16);
     tile.text.setStyle({ fontSize: style.fontSize, fill: style.fontColor });
     if (tile.value !== 0) tile.text.setText(tile.value);
     else tile.text.setText("");
@@ -175,4 +169,3 @@ export function updateVisualTileStyle(tile) {
     tile.text.setStyle({ fontSize: style.fontSize, fill: style.fontColor });
   }
 }
-

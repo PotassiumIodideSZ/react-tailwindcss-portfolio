@@ -12,7 +12,7 @@ export default class Tile extends Phaser.GameObjects.Container {
     this.createText(scene, boardRect);
     this.createTile(scene, boardRect);
   }
-  
+
   createTile(scene, boardRect) {
     this.createTileRect(scene, boardRect);
     this.createText(scene, boardRect);

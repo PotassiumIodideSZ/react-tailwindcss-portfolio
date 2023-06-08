@@ -1,7 +1,5 @@
-import { tileSize, boardSize, moveDuration } from "./GameStart.js";
+import { tileSize, moveDuration } from "./GameStart.js";
 import { updateVisualTileStyle } from "./TileStyle.js";
-
-
 
 export function moveTilesVisually(movedTiles, gameScene) {
   const visualBoardRect = gameScene.add.container(
@@ -52,5 +50,4 @@ export function moveTilesVisually(movedTiles, gameScene) {
       },
     });
   });
-
 }
