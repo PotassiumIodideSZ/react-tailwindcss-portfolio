@@ -6,6 +6,8 @@ import { updateTileStyle } from "./TileStyle.js";
 export class GameSceneClass extends Phaser.Scene {
   constructor(options) {
     super(options);
+
+    this.canMove = true;
   }
 
   addNewTile() {
@@ -27,37 +29,38 @@ export class GameSceneClass extends Phaser.Scene {
     updateTileStyle(tile, this);
   }
 
+  moveTilesWrapper(x, y, scene) {
+    if (scene.canMove) {
+      moveTiles(x, y, scene);
+      scene.canMove = false;
+      setTimeout(() => {
+        scene.canMove = true;
+      }, moveDuration);
+    }
+  }
+
   create() {
     this.cameras.main.setBackgroundColor("#ffffff");
     gameCreate(this);
 
-    let canMove = true;
 
-    function moveTilesWrapper(x, y, scene) {
-      if (canMove) {
-        moveTiles(x, y, scene);
-        canMove = false;
-        setTimeout(() => {
-          canMove = true;
-        }, moveDuration);
-      }
-    }
+    
     //Keyboard
     const cursors = this.input.keyboard.createCursorKeys();
     cursors.left.on("down", () => {
-      moveTilesWrapper(-1, 0, this);
+      this.moveTilesWrapper(-1, 0, this);
     });
 
     cursors.right.on("down", () => {
-      moveTilesWrapper(1, 0, this);
+      this.moveTilesWrapper(1, 0, this);
     });
 
     cursors.up.on("down", () => {
-      moveTilesWrapper(0, -1, this);
+      this.moveTilesWrapper(0, -1, this);
     });
 
     cursors.down.on("down", () => {
-      moveTilesWrapper(0, 1, this);
+      this.moveTilesWrapper(0, 1, this);
     });
 
     //Swipes
@@ -85,9 +88,9 @@ export class GameSceneClass extends Phaser.Scene {
       }
 
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        moveTilesWrapper(Math.sign(deltaX), 0, this);
+        this.moveTilesWrapper(Math.sign(deltaX), 0, this);
       } else {
-        moveTilesWrapper(0, Math.sign(deltaY), this);
+        this.moveTilesWrapper(0, Math.sign(deltaY), this);
       }
     });
   }
