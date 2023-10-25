@@ -11,6 +11,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import WordMatch from "./WordMatch/WordMatch";
 import Phaser2048 from "./Phaser2048/Main.js";
+import DrawingBoard from "./DrawingBoard/Main.js";
 // import Test1 from "./tests/isPalindrome.js";
 import Test2 from "./tests/calculateFrequency.js";
 // import Test3 from "./tests/methods.js";
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== "/snakegame" && location.pathname !== "/bashnyaslov" && location.pathname !== "/phaser2048" && location.pathname !== "/tests" && (
+      {location.pathname !== "/snakegame" && location.pathname !== "/bashnyaslov" && location.pathname !== "/phaser2048" && location.pathname !== "/tests" && location.pathname !== "/DrawingBoard" && (
         <div className=" bg-secondary-light dark:bg-primary-dark transition duration-300">
           <ScrollToTop />
           <AppHeader />
@@ -57,6 +58,7 @@ function App() {
         <Route path="/bashnyaslov" element={<WordMatch />} />
         <Route path="/snakegame" element={<SnakeGame />} />
         <Route path="/phaser2048" element={<Phaser2048 />} />
+        <Route path="/drawingboard" element={<DrawingBoard />} />
         {/* <Route path="/tests/1" element={<Test1 />} /> */}
         <Route path="/tests/2" element={<Test2 />} />
         {/* <Route path="/tests/3" element={<Test3 />} /> */}
