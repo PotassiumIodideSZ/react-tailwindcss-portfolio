@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./css/SnakeGame.css";
 
+
+
+
 const BOARD_SIZE = 20;
 const SPEED = 200;
 
@@ -103,7 +106,6 @@ const SnakeGame = () => {
     newBoard[food.y][food.x] = "food";
     setBoard(newBoard);
   }, [snake, food]);
-
 
   useEffect(() => {
     const handleKeyDown = (event) => {
