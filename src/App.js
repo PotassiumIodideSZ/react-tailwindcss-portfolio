@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== "/snakegame" && location.pathname !== "/bashnyaslov" && location.pathname !== "/phaser2048" && location.pathname !== "/tests" && location.pathname !== "/DrawingBoard" && (
+      {location.pathname !== "/snakegame" && location.pathname !== "/bashnyaslov" && location.pathname !== "/phaser2048" && location.pathname !== "/tests" && location.pathname !== "/drawingboard" && (
         <div className=" bg-secondary-light dark:bg-primary-dark transition duration-300">
           <ScrollToTop />
           <AppHeader />
